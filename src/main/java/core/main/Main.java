@@ -1,16 +1,22 @@
 package core.main;
 
+import core.routines.SquareRoutine;
 import core.utils.Constants;
 import core.utils.KeyInput;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
+// definition of routine - a set placement of each dot.
+
+// half x is 750
+// half y is 562
+
 /*
 TODO:
     - In Object constructor, change target definition from "target = id == 3" to "target = id == numObjects" - This will ease the id assignment process for a variable amount of dots
     - Add menu to run pre-defined routines or create a menu to create a routine "in the program"... a create your own routine thingy
-        - save routines as csv files or json
+        - save routines as csv files or json (json looks better after 1 min of research)
     -
  */
 
@@ -18,6 +24,8 @@ public class Main extends Canvas implements Runnable {
 
     boolean running = false;
     public int showFrames = 0;
+
+    public SquareRoutine routine;
 
     private Thread thread;
     private KeyInput keyInput;
@@ -30,6 +38,7 @@ public class Main extends Canvas implements Runnable {
 
     public Main() {
         handler = new Handler();
+        routine = new SquareRoutine();
 
         Object o1 = new Object(halfX - 250, halfY - 250, 0, handler, this);
         Object o2 = new Object(halfX + 250, halfY - 250, 1, handler, this);
@@ -64,6 +73,7 @@ public class Main extends Canvas implements Runnable {
     public void tick() {
         handler.tick();
         keyInput.tick();
+        routine.tick();
     }
 
     public void render() {
@@ -79,7 +89,8 @@ public class Main extends Canvas implements Runnable {
         g.fillRect(0,0,Constants.WIDTH, Constants.HEIGHT);
 
         handler.render(g);
-        drawBox(g);
+        routine.drawSquare(g);
+        //drawBox(g);
 
         g.dispose();
         bs.show();
