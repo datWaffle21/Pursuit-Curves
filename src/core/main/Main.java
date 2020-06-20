@@ -6,6 +6,14 @@ import core.utils.KeyInput;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
+/*
+TODO:
+    - In Object constructor, change target definition from "target = id == 3" to "target = id == numObjects" - This will ease the id assignment process for a variable amount of dots
+    - Add menu to run pre-defined routines or create a menu to create a routine "in the program"... a create your own routine thingy
+        - save routines as csv files or json
+    -
+ */
+
 public class Main extends Canvas implements Runnable {
 
     boolean running = false;
