@@ -27,8 +27,10 @@ public class Handler {
         }
     }
 
-    public void addObject(GameObject object) {
-        this.objects.add(object);
+    public void addObject(GameObject... object) {
+        for(GameObject gameObject: object) {
+            this.objects.add(gameObject);
+        }
     }
 
     public void removeObject(GameObject object) {

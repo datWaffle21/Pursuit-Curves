@@ -15,13 +15,27 @@ public class Main extends Canvas implements Runnable {
     private KeyInput keyInput;
     private Handler handler;
 
+    int halfX = Constants.WIDTH / 2;
+    int halfY = Constants.HEIGHT / 2;
+
+    private Object o1, o2, o3, o4;
+
     public Main() {
         handler = new Handler();
+
+        Object o1 = new Object(halfX - 250, halfY - 250, 0, handler, this);
+        Object o2 = new Object(halfX + 250, halfY - 250, 1, handler, this);
+        Object o3 = new Object(halfX + 250, halfY + 250, 2, handler, this);
+        Object o4 = new Object(halfX - 250, halfY + 250, 3, handler, this);
+
+        handler.addObject(o1, o2, o3, o4);
+
         keyInput = new KeyInput(handler);
 
         this.addKeyListener(keyInput);
 
-        new Window(Constants.WIDTH, Constants.HEIGHT, "NAME HERE", this);
+        new Window(Constants.WIDTH, Constants.HEIGHT, "Pursuit Curves", this);
+
     }
 
     synchronized void start() {
@@ -57,6 +71,7 @@ public class Main extends Canvas implements Runnable {
         g.fillRect(0,0,Constants.WIDTH, Constants.HEIGHT);
 
         handler.render(g);
+        drawBox(g);
 
         g.dispose();
         bs.show();
@@ -103,6 +118,15 @@ public class Main extends Canvas implements Runnable {
         } else {
             return var;
         }
+    }
+
+    public void drawBox(Graphics g) {
+        g.setColor(Color.WHITE);
+
+        g.drawLine(halfX - 250, halfY - 250, halfX + 250, halfY - 250);
+        g.drawLine(halfX + 250, halfY - 250, halfX + 250, halfY + 250);
+        g.drawLine(halfX - 250, halfY + 250, halfX + 250, halfY + 250);
+        g.drawLine(halfX - 250, halfY - 250, halfX - 250, halfY + 250);
     }
 
 

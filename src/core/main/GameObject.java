@@ -13,26 +13,32 @@ public abstract class GameObject {
     protected float velX;
     /**The velocity of the object in the y direction */
     protected float velY;
+    /**The ID of the object, given in <code>int</code> */
+    protected int id;
 
     private Random r = new Random();
 
     /**
      *  New & improved constructor for GameObjects. Used for random spawns
      * @param spawnLocation Rectangle bounds for spawn. <code>Constants.spawnZone</code> is for the entire screen.
+     * @param id The ID for the object.
      */
-    public GameObject(Rectangle spawnLocation) {
+    public GameObject(Rectangle spawnLocation, int id) {
         this.x = (r.nextFloat() * (spawnLocation.width - spawnLocation.x)) + (spawnLocation.x - 25);
         this.y = (r.nextFloat() * (spawnLocation.height - spawnLocation.y)) + (spawnLocation.y - 25);
+        this.id = id;
     }
 
     /**
      * Old but useful constructor. Used to spawn objects in not random locations.
      * @param x X position of spawn
      * @param y Y position of spawn
+     * @param id the ID of the object
      */
-    public GameObject(float x, float y) {
+    public GameObject(float x, float y, int id) {
         this.x = x;
         this.y = y;
+        this.id = id;
     }
 
     /**
@@ -114,5 +120,13 @@ public abstract class GameObject {
      */
     public void setVelY(float velY) {
         this.velY = velY;
+    }
+
+    /**
+     * Use this method to get the ID of the object called
+     * @return The ID of the object.
+     */
+    public int getID() {
+        return id;
     }
 }
