@@ -41,6 +41,10 @@ public abstract class GameObject {
         this.id = id;
     }
 
+    public GameObject() {
+
+    }
+
     /**
      * Every time the game does a loop this method is called.
      */
@@ -128,5 +132,13 @@ public abstract class GameObject {
      */
     public int getID() {
         return id;
+    }
+
+    /**
+     * Use this method to set a new ID to a GameObject
+     * @param id The new ID
+     */
+    public void setID(int id) {
+        this.id = id;
     }
 }

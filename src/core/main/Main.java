@@ -1,5 +1,6 @@
 package core.main;
 
+import core.routines.SquareRoutine;
 import core.utils.Constants;
 import core.utils.KeyInput;
 
@@ -10,7 +11,7 @@ import java.awt.image.BufferStrategy;
 TODO:
     - In Object constructor, change target definition from "target = id == 3" to "target = id == numObjects" - This will ease the id assignment process for a variable amount of dots
     - Add menu to run pre-defined routines or create a menu to create a routine "in the program"... a create your own routine thingy
-        - save routines as csv files or json
+        - save routines as csv files or json (json looks better after 1 min of research)
     -
  */
 
@@ -23,24 +24,19 @@ public class Main extends Canvas implements Runnable {
     private KeyInput keyInput;
     private Handler handler;
 
+    private SquareRoutine squareRoutine;
+
     int halfX = Constants.WIDTH / 2;
     int halfY = Constants.HEIGHT / 2;
-
-    private Object o1, o2, o3, o4;
 
     public Main() {
         handler = new Handler();
 
-        Object o1 = new Object(halfX - 250, halfY - 250, 0, handler, this);
-        Object o2 = new Object(halfX + 250, halfY - 250, 1, handler, this);
-        Object o3 = new Object(halfX + 250, halfY + 250, 2, handler, this);
-        Object o4 = new Object(halfX - 250, halfY + 250, 3, handler, this);
-
-        handler.addObject(o1, o2, o3, o4);
-
         keyInput = new KeyInput(handler);
 
         this.addKeyListener(keyInput);
+
+        squareRoutine = new SquareRoutine(handler);
 
         new Window(Constants.WIDTH, Constants.HEIGHT, "Pursuit Curves", this);
 
