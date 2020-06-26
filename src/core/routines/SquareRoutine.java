@@ -8,9 +8,12 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+
+import static core.utils.Constants.userHome;
 
 public class SquareRoutine {
 
@@ -26,7 +29,7 @@ public class SquareRoutine {
 		this.handler = handler;
 		jsonParser = new JSONParser();
 
-		try(FileReader reader = new FileReader("E:\\programming\\IntelleJ_Projects\\Pursuit-Curves\\src\\modules\\assets\\routines\\square-routine.json")){
+		try(FileReader reader = new FileReader(userHome + "/IdeaProjects/Pursuit-Curves/src/modules/assets/routines/square-routine.json")){
 
 			JSONArray array = (JSONArray) jsonParser.parse(reader);
 
@@ -56,8 +59,12 @@ public class SquareRoutine {
 		}
 	}
 
+	public void render(Graphics g) {
+		drawBox(g);
+	}
+
 	public void loadDots() {
-		try(FileReader reader = new FileReader("E:\\programming\\IntelleJ_Projects\\Pursuit-Curves\\src\\modules\\assets\\routines\\square-routine.json")) {
+		try(FileReader reader = new FileReader(userHome + "/IdeaProjects/Pursuit-Curves/src/modules/assets/routines/square-routine.json")) {
 
 			JSONArray array = (JSONArray) jsonParser.parse(reader);
 
@@ -75,5 +82,14 @@ public class SquareRoutine {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void drawBox(Graphics g) {
+		g.setColor(Color.WHITE);
+
+		g.drawLine(500, 312, 1000, 312);
+		g.drawLine(1000, 312, 1000, 812);
+		g.drawLine(500, 812, 1000, 812);
+		g.drawLine(500, 312, 500, 812);
 	}
 }

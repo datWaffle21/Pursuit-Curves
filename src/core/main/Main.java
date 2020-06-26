@@ -1,6 +1,7 @@
 package core.main;
 
 import core.routines.SquareRoutine;
+import core.routines.TriangleRoutine;
 import core.utils.Constants;
 import core.utils.KeyInput;
 
@@ -25,18 +26,23 @@ public class Main extends Canvas implements Runnable {
     private Handler handler;
 
     private SquareRoutine squareRoutine;
+    private TriangleRoutine triangleRoutine;
 
     int halfX = Constants.WIDTH / 2;
     int halfY = Constants.HEIGHT / 2;
 
     public Main() {
+
+        System.out.println(halfX + " " + halfY);
         handler = new Handler();
 
         keyInput = new KeyInput(handler);
 
         this.addKeyListener(keyInput);
 
-        squareRoutine = new SquareRoutine(handler, this);
+        //squareRoutine = new SquareRoutine(handler, this);
+        triangleRoutine = new TriangleRoutine(handler, this);
+
 
         new Window(Constants.WIDTH, Constants.HEIGHT, "Pursuit Curves", this);
     }
@@ -74,7 +80,8 @@ public class Main extends Canvas implements Runnable {
         g.fillRect(0,0,Constants.WIDTH, Constants.HEIGHT);
 
         handler.render(g);
-        drawBox(g);
+        //squareRoutine.render(g);
+        triangleRoutine.render(g);
 
         g.dispose();
         bs.show();
