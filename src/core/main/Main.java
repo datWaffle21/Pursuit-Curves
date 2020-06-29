@@ -1,11 +1,15 @@
 package core.main;
 
+import core.hud.Menu;
+import core.routines.PentagonRoutine;
 import core.routines.SquareRoutine;
 import core.routines.TriangleRoutine;
 import core.utils.Constants;
 import core.utils.KeyInput;
 
-import java.awt.*;
+import java.awt.Canvas;
+import java.awt.Graphics;
+import java.awt.Color;
 import java.awt.image.BufferStrategy;
 
 /*
@@ -13,6 +17,9 @@ TODO:
     - (DONE) In Object constructor, change target definition from "target = id == 3" to "target = id == numObjects" - This will ease the id assignment process for a variable amount of dots
     - Add menu to run pre-defined routines or create a menu to create a routine "in the program"... a create your own routine thingy
         - (DONE) save routines as csv files or json (json looks better after 1 min of research)
+    - Should I use json or txt for options.
+    -
+    -
     -
  */
 
@@ -24,16 +31,25 @@ public class Main extends Canvas implements Runnable {
     private Thread thread;
     private KeyInput keyInput;
     private Handler handler;
+    private Menu menu;
 
     private SquareRoutine squareRoutine;
     private TriangleRoutine triangleRoutine;
+    private PentagonRoutine pentagonRoutine;
+
+    public STATE state = STATE.Menu;
 
     int halfX = Constants.WIDTH / 2;
     int halfY = Constants.HEIGHT / 2;
 
-    public Main() {
+    public enum STATE {
+        Menu,
+        Options,
+        Help,
+        Select
+    }
 
-        System.out.println(halfX + " " + halfY);
+    public Main() {
         handler = new Handler();
 
         keyInput = new KeyInput(handler);
@@ -41,8 +57,10 @@ public class Main extends Canvas implements Runnable {
         this.addKeyListener(keyInput);
 
         //squareRoutine = new SquareRoutine(handler, this);
-        triangleRoutine = new TriangleRoutine(handler, this);
+        //triangleRoutine = new TriangleRoutine(handler, this);
+        pentagonRoutine = new PentagonRoutine(handler, this);
 
+        menu = new Menu(this, handler);
 
         new Window(Constants.WIDTH, Constants.HEIGHT, "Pursuit Curves", this);
     }
@@ -65,6 +83,7 @@ public class Main extends Canvas implements Runnable {
     public void tick() {
         handler.tick();
         keyInput.tick();
+        menu.tick();
     }
 
     public void render() {
@@ -80,8 +99,10 @@ public class Main extends Canvas implements Runnable {
         g.fillRect(0,0,Constants.WIDTH, Constants.HEIGHT);
 
         handler.render(g);
+        menu.render(g);
         //squareRoutine.render(g);
-        triangleRoutine.render(g);
+        //triangleRoutine.render(g);
+        pentagonRoutine.render(g);
 
         g.dispose();
         bs.show();
@@ -129,16 +150,6 @@ public class Main extends Canvas implements Runnable {
             return var;
         }
     }
-
-    public void drawBox(Graphics g) {
-        g.setColor(Color.WHITE);
-
-        g.drawLine(halfX - 250, halfY - 250, halfX + 250, halfY - 250);
-        g.drawLine(halfX + 250, halfY - 250, halfX + 250, halfY + 250);
-        g.drawLine(halfX - 250, halfY + 250, halfX + 250, halfY + 250);
-        g.drawLine(halfX - 250, halfY - 250, halfX - 250, halfY + 250);
-    }
-
 
     public static void main(String[] args) {
         new Main();
